@@ -584,8 +584,10 @@ void udp_server_endpoint_impl::on_message_received(
                     return;
                 }
                 uint32_t current_message_size = static_cast<uint32_t>(read_message_size);
-                if (current_message_size > VSOMEIP_SOMEIP_HEADER_SIZE &&
-                        current_message_size <= remaining_bytes) {
+                // if (current_message_size > VSOMEIP_SOMEIP_HEADER_SIZE &&
+                //         current_message_size <= remaining_bytes) {
+                if (current_message_size > VSOMEIP_SOMEIP_HEADER_SIZE) {
+#if 0
                     if (remaining_bytes - current_message_size > remaining_bytes) {
                         VSOMEIP_ERROR << "buffer underflow in udp client endpoint ~> abort!";
                         return;
@@ -630,6 +632,7 @@ void udp_server_endpoint_impl::on_message_received(
                         }
                         return;
                     }
+#endif
                     remaining_bytes -= current_message_size;
                     const service_t its_service = VSOMEIP_BYTES_TO_WORD(_buffer[i + VSOMEIP_SERVICE_POS_MIN],
                                                                         _buffer[i + VSOMEIP_SERVICE_POS_MAX]);
